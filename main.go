@@ -1,22 +1,10 @@
 package main
 
 import (
-	"log"
-	"os"
-
-	"github.com/joho/godotenv"
+	"hodei/web1/db"
 )
 
-func init() {
-
-	err := godotenv.Load(".env")
-
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
-
 func main() {
+	println(db.GetThis())
 
-	println(os.Getenv("BAT"))
 }
