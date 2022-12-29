@@ -8,15 +8,15 @@ import (
 	"github.com/deta/deta-go/service/base"
 )
 
-func repo() *base.Base {
+func repo(baseName DbBase) *base.Base {
 	d, _ := deta.New(deta.WithProjectKey(envs.Get("PROJ_KEY")))
-	db, _ := base.New(d, "web1")
+	db, _ := base.New(d, baseName.String())
 	return db
 
 }
 
-func Put(info interface{}) string {
-	inserted, err := repo().Insert(info)
+func Put(baseName DbBase, info interface{}) string {
+	inserted, err := repo(baseName).Insert(info)
 	if err != nil {
 		fmt.Println("failed to insert: ", err)
 
