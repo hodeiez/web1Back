@@ -18,6 +18,7 @@ func repo(driveName db.DbBase) *drive.Drive {
 	return dr
 }
 func Put(folderName db.DbBase, fileRef string) string {
+	println(fileRef)
 	file, err := os.Open(fileRef)
 	if err != nil {
 		fmt.Println("failed to open file: ", err)
@@ -35,5 +36,6 @@ func Put(folderName db.DbBase, fileRef string) string {
 }
 func getFileNameFromRef(fileRef string) string {
 	splitted := strings.Split(fileRef, "/")
+
 	return splitted[len(splitted)-1]
 }

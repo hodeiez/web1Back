@@ -26,7 +26,7 @@ type DbInfo struct {
 	TracksRef   []DbTrack `json:"tracksRef"`
 	Date        string    `json:"date"`
 	ImageAlbum  []string  `json:"images"`
-	InfoType    InfoType  `json:"type"`
+	InfoType    string    `json:"type"`
 }
 type InfoType int
 
