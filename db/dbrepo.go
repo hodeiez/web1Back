@@ -23,3 +23,9 @@ func Put(baseName DbBase, info interface{}) string {
 	}
 	return inserted
 }
+func Update(baseName DbBase, key string, info interface{}) {
+	err := repo(baseName).Update(key, info.(base.Updates))
+	if err != nil {
+		fmt.Println("failed to update: ", err)
+	}
+}

@@ -5,20 +5,12 @@ import (
 	"hodei/web1/drive"
 )
 
-// func UploadTrackTest(folder db.DbBase, fileRef string) string {
-// 	fileName := drive.Put(folder.String(), fileRef)
-
-// 	trackDb := db.DbTrack{Title: "theTest", Description: "theDescription", FileRef: fileName}
-// 	return db.Put(folder, trackDb)
-
-// }
 func AddInfoCard(info db.DbInfo) string {
-	if info.ImageRef != "" || len(info.ImageAlbum) != 0 || len(info.TracksRef) != 0 || len(info.AlbumsRef) != 0 {
-		// info.ImageRef = AddImage(info.ImageRef)
-		// info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
-		// info.TracksRef = AddTracks(info.TracksRef)
-		info.AlbumsRef = AddAlbums(info.AlbumsRef)
-	}
+
+	info.ImageRef = AddImage(info.ImageRef)
+	info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
+	info.TracksRef = AddTracks(info.TracksRef)
+	info.AlbumsRef = AddAlbums(info.AlbumsRef)
 
 	return db.Put(db.InfoCardsBase, info)
 }
@@ -29,32 +21,43 @@ func AddTrack(trackInfo db.DbTrack) db.DbTrack {
 	return trackInfo
 }
 func AddTracks(trackInfos []db.DbTrack) []db.DbTrack {
-	for i, t := range trackInfos {
-		trackInfos[i] = AddTrack(t)
+	if len(trackInfos) != 0 {
+		for i, t := range trackInfos {
+			trackInfos[i] = AddTrack(t)
+		}
 	}
 	return trackInfos
 }
 func AddImage(imageRef string) string {
-	return drive.Put(db.ImageBase, imageRef)
+	if imageRef != "" {
+		return drive.Put(db.ImageBase, imageRef)
+	}
+	return imageRef
 }
 func AddImageAlbum(imagesRef []string) []string {
-	imagesDriveRef := make([]string, len(imagesRef))
-	for _, refs := range imagesRef {
-		imagesDriveRef = append(imagesDriveRef, drive.Put(db.ImageBase, refs))
+	if len(imagesRef) != 0 {
+		for i, refs := range imagesRef {
+			imagesRef[i] = AddImage(refs)
+		}
 	}
-	return imagesDriveRef
+	return imagesRef
+
 }
 func AddAlbum(albumInfo db.DbAlbum) db.DbAlbum {
+
 	for i, track := range albumInfo.Tracks {
 		albumInfo.Tracks[i] = AddTrack(track)
 	}
 	albumInfo.Key = db.Put(db.AlbumsBase, albumInfo)
+
 	return albumInfo
 }
 
 func AddAlbums(albumsInfos []db.DbAlbum) []db.DbAlbum {
-	for i, a := range albumsInfos {
-		albumsInfos[i] = AddAlbum(a)
+	if len(albumsInfos) != 0 {
+		for i, a := range albumsInfos {
+			albumsInfos[i] = AddAlbum(a)
+		}
 	}
 	return albumsInfos
 }
