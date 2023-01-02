@@ -5,14 +5,14 @@ import (
 	"hodei/web1/drive"
 )
 
-func AddInfoCard(info db.DbInfo) string {
+func AddInfoCard(info db.DbInfoDTO) string {
 
 	info.ImageRef = AddImage(info.ImageRef)
 	info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
 	info.TracksRef = AddTracks(info.TracksRef)
 	info.AlbumsRef = AddAlbums(info.AlbumsRef)
 
-	return db.Put(db.InfoCardsBase, info)
+	return db.Put(db.InfoCardsBase, DbInfoConverter(info))
 }
 func AddTrack(trackInfo db.DbTrack) db.DbTrack {
 	file := drive.Put(db.TracksBase, trackInfo.FileRef)
@@ -43,21 +43,37 @@ func AddImageAlbum(imagesRef []string) []string {
 	return imagesRef
 
 }
-func AddAlbum(albumInfo db.DbAlbum) db.DbAlbum {
+func AddAlbum(albumInfo db.DbAlbumDTO) db.DbAlbumDTO {
 
 	for i, track := range albumInfo.Tracks {
 		albumInfo.Tracks[i] = AddTrack(track)
 	}
-	albumInfo.Key = db.Put(db.AlbumsBase, albumInfo)
+	converted := DbAlbumConverter(albumInfo)
+	albumInfo.Key = db.Put(db.AlbumsBase, converted)
 
 	return albumInfo
 }
 
-func AddAlbums(albumsInfos []db.DbAlbum) []db.DbAlbum {
+func AddAlbums(albumsInfos []db.DbAlbumDTO) []db.DbAlbumDTO {
 	if len(albumsInfos) != 0 {
 		for i, a := range albumsInfos {
 			albumsInfos[i] = AddAlbum(a)
 		}
 	}
 	return albumsInfos
+}
+
+//**************************************UPDATES****************//
+func UpdateTrack(trackInfo db.DbTrack) {
+	db.Update(db.TracksBase, trackInfo.Key, trackInfo)
+}
+
+//*******************************GET***************************//
+func GetAlbumDTOByKey(key string) db.DbAlbumDTO {
+	album := db.GetAlbumByKey(key)
+	tracks := make([]db.DbTrack, len(album.Tracks))
+	for i, t := range album.Tracks {
+		tracks[i] = db.GetTrackByKey(t)
+	}
+	return db.DbAlbumDTO{Key: album.Key, Tracks: tracks, Year: album.Year, Date: album.Year, Title: album.Title, Description: album.Description}
 }

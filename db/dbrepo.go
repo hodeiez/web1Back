@@ -29,3 +29,38 @@ func Update(baseName DbBase, key string, info interface{}) {
 		fmt.Println("failed to update: ", err)
 	}
 }
+func GetByKey(baseName DbBase, key string, dest interface{}) error {
+	err := repo(baseName).Get(key, dest)
+	if err != nil {
+		fmt.Println("failed to insert: ", err)
+
+	}
+	return err
+}
+func GetTrackByKey(key string) DbTrack {
+	dest := DbTrack{}
+	err := repo(TracksBase).Get(key, &dest)
+	if err != nil {
+		fmt.Println("failed to insert: ", err)
+
+	}
+	return dest
+}
+func GetAlbumByKey(key string) DbAlbum {
+	dest := DbAlbum{}
+	err := repo(AlbumsBase).Get(key, &dest)
+	if err != nil {
+		fmt.Println("failed to insert: ", err)
+
+	}
+	return dest
+}
+func GetInfoCardByKey(key string) DbInfo {
+	dest := DbInfo{}
+	err := repo(InfoCardsBase).Get(key, &dest)
+	if err != nil {
+		fmt.Println("failed to insert: ", err)
+
+	}
+	return dest
+}

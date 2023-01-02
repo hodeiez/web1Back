@@ -1,12 +1,20 @@
 package db
 
-type DbAlbum struct {
+type DbAlbumDTO struct {
 	Key         string    `json:"key"`
 	Tracks      []DbTrack `json:"tracks"`
 	Year        string    `json:"year"`
 	Date        string    `json:"date"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
+}
+type DbAlbum struct {
+	Key         string   `json:"key"`
+	Tracks      []string `json:"tracks"`
+	Year        string   `json:"year"`
+	Date        string   `json:"date"`
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
 }
 type DbTrack struct {
 	Key         string `json:"key"`
@@ -15,18 +23,31 @@ type DbTrack struct {
 	Date        string `json:"date"`
 	FileRef     string `json:"fileRef"`
 }
+type DbInfoDTO struct {
+	Key         string       `json:"key"`
+	Year        string       `json:"year"`
+	Locale      string       `json:"locale"`
+	Title       string       `json:"title"`
+	Description string       `json:"description"`
+	ImageRef    string       `json:"imageRef"`
+	AlbumsRef   []DbAlbumDTO `json:"albumsRef"`
+	TracksRef   []DbTrack    `json:"tracksRef"`
+	Date        string       `json:"date"`
+	ImageAlbum  []string     `json:"images"`
+	InfoType    string       `json:"type"`
+}
 type DbInfo struct {
-	Key         string    `json:"key"`
-	Year        string    `json:"year"`
-	Locale      string    `json:"locale"`
-	Title       string    `json:"title"`
-	Description string    `json:"description"`
-	ImageRef    string    `json:"imageRef"`
-	AlbumsRef   []DbAlbum `json:"albumsRef"`
-	TracksRef   []DbTrack `json:"tracksRef"`
-	Date        string    `json:"date"`
-	ImageAlbum  []string  `json:"images"`
-	InfoType    string    `json:"type"`
+	Key         string   `json:"key"`
+	Year        string   `json:"year"`
+	Locale      string   `json:"locale"`
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
+	ImageRef    string   `json:"imageRef"`
+	AlbumsRef   []string `json:"albumsRef"`
+	TracksRef   []string `json:"tracksRef"`
+	Date        string   `json:"date"`
+	ImageAlbum  []string `json:"images"`
+	InfoType    string   `json:"type"`
 }
 type InfoType int
 
