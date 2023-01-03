@@ -5,6 +5,7 @@ import (
 	"hodei/web1/drive"
 )
 
+//*************ADD**********************//
 func AddInfoCard(info db.DbInfoDTO) string {
 
 	info.ImageRef = AddImage(info.ImageRef)
@@ -75,5 +76,27 @@ func GetAlbumDTOByKey(key string) db.DbAlbumDTO {
 	for i, t := range album.Tracks {
 		tracks[i] = db.GetTrackByKey(t)
 	}
-	return db.DbAlbumDTO{Key: album.Key, Tracks: tracks, Year: album.Year, Date: album.Year, Title: album.Title, Description: album.Description}
+	return album.ToDTO(tracks)
+}
+func GetAlbumsDTOByKey(keys []string) []db.DbAlbumDTO {
+	albums := make([]db.DbAlbumDTO, len(keys))
+	for i, k := range keys {
+		albums[i] = GetAlbumDTOByKey(k)
+	}
+	return albums
+}
+func GetTracksByKey(keys []string) []db.DbTrack {
+	tracks := make([]db.DbTrack, len(keys))
+	for i, k := range keys {
+		tracks[i] = db.GetTrackByKey(k)
+	}
+	return tracks
+}
+func GetInfoCardDTOByKey(key string) db.DbInfoDTO {
+	info := db.GetInfoCardByKey(key)
+	return info.ToDTO(GetTracksByKey(info.TracksRef), GetAlbumsDTOByKey(info.AlbumsRef))
+}
+
+func GetAudioFileByKey(key string) []byte {
+	return drive.GetAudioFile(db.GetTrackByKey(key).FileRef)
 }

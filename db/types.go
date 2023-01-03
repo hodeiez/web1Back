@@ -93,3 +93,10 @@ func (dbBase DbBase) String() string {
 		return "-"
 	}
 }
+func (album DbAlbum) ToDTO(tracks []DbTrack) DbAlbumDTO {
+	return DbAlbumDTO{Key: album.Key, Tracks: tracks, Year: album.Year, Date: album.Year, Title: album.Title, Description: album.Description}
+
+}
+func (info DbInfo) ToDTO(tracks []DbTrack, albums []DbAlbumDTO) DbInfoDTO {
+	return DbInfoDTO{Key: info.Key, Year: info.Year, Locale: info.Locale, Title: info.Title, Description: info.Description, ImageRef: info.ImageRef, AlbumsRef: albums, TracksRef: tracks, Date: info.Date, ImageAlbum: info.ImageAlbum, InfoType: info.InfoType}
+}

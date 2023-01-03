@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"hodei/web1/db"
 	envs "hodei/web1/env"
+	"io/ioutil"
 	"os"
 	"strings"
 
@@ -38,4 +39,17 @@ func getFileNameFromRef(fileRef string) string {
 	splitted := strings.Split(fileRef, "/")
 
 	return splitted[len(splitted)-1]
+}
+func GetAudioFile(fileRef string) []byte {
+	fileBuf, err := repo(db.TracksBase).Get(fileRef)
+	if err != nil {
+		fmt.Println("error getting file: ", err)
+	}
+	defer fileBuf.Close()
+	file, err := ioutil.ReadAll(fileBuf)
+	if err != nil {
+		fmt.Println("error reading file: ", err)
+	}
+	return file
+
 }
