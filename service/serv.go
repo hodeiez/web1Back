@@ -96,7 +96,14 @@ func GetInfoCardDTOByKey(key string) db.DbInfoDTO {
 	info := db.GetInfoCardByKey(key)
 	return info.ToDTO(GetTracksByKey(info.TracksRef), GetAlbumsDTOByKey(info.AlbumsRef))
 }
-
+func GetInfoCardDTOByType(info db.InfoType) []db.DbInfoDTO {
+	infos := db.GetInfoCardsByType(info)
+	return infosToDTO(infos)
+}
+func GetInfoCardDTOByRange(from string, to string) []db.DbInfoDTO {
+	infos := db.GetInfoCardsByRange(from, to)
+	return infosToDTO(infos)
+}
 func GetAudioFileByKey(key string) []byte {
 	return drive.GetAudioFile(db.GetTrackByKey(key).FileRef)
 }

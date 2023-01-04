@@ -24,7 +24,7 @@ func main() {
 	// infojson, _ := json.MarshalIndent(service.GetInfoCardDTOByKey(infoCardKey), "", "   ")
 	// fmt.Println(string(infojson))
 	// os.WriteFile("file.mp3", service.GetAudioFileByKey(trackKey), os.ModeDevice.Perm())
-	infoCardByType, _ := json.MarshalIndent(db.GetInfoCardByType(db.Creative), "", "   ")
+	infoCardByType, _ := json.MarshalIndent(db.GetInfoCardsByType(db.Creative), "", "   ")
 	fmt.Println(string(infoCardByType))
 
 }

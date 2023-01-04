@@ -36,3 +36,10 @@ func AlbumsToRef(albums []db.DbAlbumDTO) []string {
 	}
 	return albumsRefs
 }
+func infosToDTO(infos []db.DbInfo) []db.DbInfoDTO {
+	infosDTO := make([]db.DbInfoDTO, len(infos))
+	for i, inf := range infos {
+		infosDTO[i] = inf.ToDTO(GetTracksByKey(inf.TracksRef), GetAlbumsDTOByKey(inf.AlbumsRef))
+	}
+	return infosDTO
+}

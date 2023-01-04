@@ -64,11 +64,20 @@ func GetInfoCardByKey(key string) DbInfo {
 	}
 	return dest
 }
-func GetInfoCardByType(info InfoType) []DbInfo {
+func GetInfoCardsByType(info InfoType) []DbInfo {
 	dest := []DbInfo{}
 	_, err := repo(InfoCardsBase).Fetch(&base.FetchInput{Q: base.Query{{"type": info.String()}}, Dest: &dest})
 	if err != nil {
-		fmt.Println("couldn't fetch infocards:", err)
+		fmt.Println("couldn't fetch infocards by type: ", err)
 	}
 	return dest
+}
+func GetInfoCardsByRange(from string, to string) []DbInfo {
+	dest := []DbInfo{}
+	_, err := repo(InfoCardsBase).Fetch(&base.FetchInput{Q: base.Query{{"date?r": []string{from, to}}}, Dest: &dest})
+	if err != nil {
+		fmt.Println("couldn't fetch infocards by range:", err)
+	}
+	return dest
+
 }
