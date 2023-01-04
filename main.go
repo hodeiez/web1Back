@@ -4,7 +4,9 @@ import (
 	// "hodei/web1/db"
 	"encoding/json"
 	"fmt"
+	"hodei/web1/controller"
 	"hodei/web1/db"
+
 	// "hodei/web1/service"
 	"os"
 )
@@ -26,5 +28,5 @@ func main() {
 	// os.WriteFile("file.mp3", service.GetAudioFileByKey(trackKey), os.ModeDevice.Perm())
 	infoCardByType, _ := json.MarshalIndent(db.GetInfoCardsByType(db.Creative), "", "   ")
 	fmt.Println(string(infoCardByType))
-
+	controller.InitApi()
 }

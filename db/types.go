@@ -69,6 +69,18 @@ func (infoType InfoType) String() string {
 		return "-"
 	}
 }
+func ToInfoType(infoType string) InfoType {
+	switch infoType {
+	case "Personal":
+		return Personal
+	case "Professional":
+		return Professional
+	case "Creative":
+		return Creative
+	default:
+		return Personal
+	}
+}
 
 type DbBase int
 
