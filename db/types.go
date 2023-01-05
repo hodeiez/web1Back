@@ -55,6 +55,7 @@ const (
 	Personal InfoType = iota
 	Professional
 	Creative
+	Nothing
 )
 
 func (infoType InfoType) String() string {
@@ -78,7 +79,7 @@ func ToInfoType(infoType string) InfoType {
 	case "Creative":
 		return Creative
 	default:
-		return Personal
+		return Nothing
 	}
 }
 

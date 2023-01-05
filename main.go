@@ -2,10 +2,8 @@ package main
 
 import (
 	// "hodei/web1/db"
-	"encoding/json"
-	"fmt"
-	"hodei/web1/controller"
-	"hodei/web1/db"
+
+	gui "hodei/web1/mygui"
 
 	// "hodei/web1/service"
 	"os"
@@ -15,6 +13,7 @@ func main() {
 	//test db
 	if len(os.Args) > 1 && os.Args[1] == "local" {
 		println("running local setup")
+		gui.Init()
 	} else {
 		println("buuuu")
 	}
@@ -26,7 +25,7 @@ func main() {
 	// infojson, _ := json.MarshalIndent(service.GetInfoCardDTOByKey(infoCardKey), "", "   ")
 	// fmt.Println(string(infojson))
 	// os.WriteFile("file.mp3", service.GetAudioFileByKey(trackKey), os.ModeDevice.Perm())
-	infoCardByType, _ := json.MarshalIndent(db.GetInfoCardsByType(db.Creative), "", "   ")
-	fmt.Println(string(infoCardByType))
-	controller.InitApi()
+	// infoCardByType, _ := json.MarshalIndent(db.GetInfoCardsByType(db.Creative), "", "   ")
+	// fmt.Println(string(infoCardByType))
+	// controller.InitApi()
 }

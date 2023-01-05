@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"bytes"
 	"encoding/json"
 	"hodei/web1/db"
 	"hodei/web1/service"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -20,4 +22,9 @@ func GetInfoCardsByType(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	infos := service.GetInfoCardDTOByType(db.ToInfoType(params["type"]))
 	json.NewEncoder(w).Encode(infos)
+}
+func GetAudioByTrackKey(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	audio := service.GetAudioFileByKey(params["trackkey"])
+	http.ServeContent(w, r, "testAudio", time.Now(), bytes.NewReader(audio))
 }
