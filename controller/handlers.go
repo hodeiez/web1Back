@@ -25,6 +25,11 @@ func GetInfoCardsByType(w http.ResponseWriter, r *http.Request) {
 }
 func GetAudioByTrackKey(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	audio := service.GetAudioFileByKey(params["trackkey"])
+	audio := service.GetAudioFileByKey(params["trackKey"])
 	http.ServeContent(w, r, "testAudio", time.Now(), bytes.NewReader(audio))
+}
+func GetAudioByAudioRef(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	audio := service.GetAudioFileByRef(params["audioRef"])
+	http.ServeContent(w, r, params["audioRef"], time.Now(), bytes.NewReader(audio))
 }

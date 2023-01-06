@@ -104,6 +104,9 @@ func GetInfoCardDTOByRange(from string, to string) []db.DbInfoDTO {
 	infos := db.GetInfoCardsByRange(from, to)
 	return infosToDTO(infos)
 }
+func GetAudioFileByRef(ref string) []byte {
+	return drive.GetAudioFile(ref)
+}
 func GetAudioFileByKey(key string) []byte {
 	return drive.GetAudioFile(db.GetTrackByKey(key).FileRef)
 }
