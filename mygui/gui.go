@@ -8,7 +8,7 @@ func Init() {
 	a := app.New()
 	myWindow := a.NewWindow("TEST")
 
-	myWindow.SetContent(TrackPanel())
+	myWindow.SetContent(TrackPanel(myWindow))
 	myWindow.ShowAndRun()
 	/*
 		save album album panel
