@@ -1,6 +1,9 @@
 package service
 
-import "hodei/web1/db"
+import (
+	"hodei/web1/db"
+	"sort"
+)
 
 func DbInfoConverter(info db.DbInfoDTO) db.DbInfo {
 	return db.DbInfo{Key: info.Key,
@@ -38,6 +41,9 @@ func AlbumsToRef(albums []db.DbAlbumDTO) []string {
 }
 func infosToDTO(infos []db.DbInfo) []db.DbInfoDTO {
 	infosDTO := make([]db.DbInfoDTO, len(infos))
+	sort.Slice(infos, func(p, q int) bool {
+		return infos[p].Date < infos[q].Date
+	})
 	for i, inf := range infos {
 		infosDTO[i] = inf.ToDTO(GetTracksByKey(inf.TracksRef), GetAlbumsDTOByKey(inf.AlbumsRef))
 	}

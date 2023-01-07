@@ -3,6 +3,7 @@ package main
 import (
 	// "hodei/web1/db"
 
+	"hodei/web1/controller"
 	gui "hodei/web1/mygui"
 
 	// "hodei/web1/service"
@@ -15,6 +16,7 @@ func main() {
 		println("running local setup")
 		gui.Init()
 	} else {
+		controller.InitApi()
 		println("buuuu")
 	}
 	// albumKey := "ngshzau1u2nk"
@@ -27,5 +29,4 @@ func main() {
 	// os.WriteFile("file.mp3", service.GetAudioFileByKey(trackKey), os.ModeDevice.Perm())
 	// infoCardByType, _ := json.MarshalIndent(db.GetInfoCardsByType(db.Creative), "", "   ")
 	// fmt.Println(string(infoCardByType))
-	// controller.InitApi()
 }

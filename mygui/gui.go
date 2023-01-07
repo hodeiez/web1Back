@@ -7,8 +7,10 @@ import (
 func Init() {
 	a := app.New()
 	myWindow := a.NewWindow("TEST")
-
-	myWindow.SetContent(TrackPanel(myWindow))
+	myWindow.SetMaster()
+	// panels := []*fyne.Container{TrackPanel(myWindow)}
+	myWindow.SetContent(MainPanel(a, myWindow, TrackPanel))
+	// myWindow.SetContent(TrackPanel(myWindow))
 	myWindow.ShowAndRun()
 	/*
 		save album album panel

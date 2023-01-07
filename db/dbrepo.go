@@ -81,3 +81,12 @@ func GetInfoCardsByRange(from string, to string) []DbInfo {
 	return dest
 
 }
+func GetAllTracks() []DbTrack {
+	dest := []DbTrack{}
+	_, err := repo(TracksBase).Fetch(&base.FetchInput{Dest: &dest})
+	if err != nil {
+		fmt.Println("couldn't fetch all tracks:", err)
+	}
+	return dest
+
+}

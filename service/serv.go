@@ -110,3 +110,6 @@ func GetAudioFileByRef(ref string) []byte {
 func GetAudioFileByKey(key string) []byte {
 	return drive.GetAudioFile(db.GetTrackByKey(key).FileRef)
 }
+func GetAllTracks() []db.DbTrack {
+	return db.GetAllTracks()
+}
