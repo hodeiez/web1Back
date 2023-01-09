@@ -22,7 +22,7 @@ func TrackPanel(w fyne.Window) *fyne.Container {
 	label5 := widget.NewLabel("")
 	data := binding.NewStringList()
 
-	but := widget.NewButton("button", func() {
+	but := widget.NewButton("Save Track", func() {
 		data.Set([]string{titleInp.Text, descrInp.Text, dateInp.Text, label4.Text})
 		setData, _ := data.Get()
 		saved := saveTrack(setData[0], setData[1], setData[2], setData[3])

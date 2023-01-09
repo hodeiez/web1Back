@@ -22,6 +22,7 @@ func ChooseDirectory(w fyne.Window, h *widget.Label) {
 	}, w)
 }
 func ChooseFile(w fyne.Window, h *widget.Label) {
+
 	dialog.ShowFileOpen(func(dir fyne.URIReadCloser, err error) {
 		save_file := "NoFile"
 		if err != nil {
@@ -35,4 +36,14 @@ func ChooseFile(w fyne.Window, h *widget.Label) {
 
 		h.SetText(save_file)
 	}, w)
+}
+
+func MyTableLength(data [][]string) (int, int) {
+	return len(data), len(data[0])
+}
+func MyCreateTable() fyne.CanvasObject {
+	return widget.NewLabel("123456789ABCD")
+}
+func MyUpdateTable(i widget.TableCellID, o fyne.CanvasObject) {
+	o.(*widget.Label).SetText(tracksData[i.Row][i.Col])
 }
