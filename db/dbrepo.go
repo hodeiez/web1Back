@@ -90,3 +90,12 @@ func GetAllTracks() []DbTrack {
 	return dest
 
 }
+func GetAllAlbums() []DbAlbum {
+	dest := []DbAlbum{}
+	_, err := repo(AlbumsBase).Fetch(&base.FetchInput{Dest: &dest})
+	if err != nil {
+		fmt.Println("couldn't fetch all tracks:", err)
+	}
+	return dest
+
+}

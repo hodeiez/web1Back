@@ -1,6 +1,7 @@
 package gui
 
 import (
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 )
 
@@ -9,7 +10,8 @@ func Init() {
 	myWindow := a.NewWindow("TEST")
 	myWindow.SetMaster()
 	// panels := []*fyne.Container{TrackPanel(myWindow)}
-	myWindow.SetContent(MainPanel(a, myWindow, TrackPanel))
+	panels := []func(w fyne.Window) *fyne.Container{TrackPanel, AlbumPanel}
+	myWindow.SetContent(MainPanel(a, myWindow, panels))
 	// myWindow.SetContent(TrackPanel(myWindow))
 	myWindow.ShowAndRun()
 	/*

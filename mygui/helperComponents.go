@@ -42,8 +42,16 @@ func MyTableLength(data [][]string) (int, int) {
 	return len(data), len(data[0])
 }
 func MyCreateTable() fyne.CanvasObject {
-	return widget.NewLabel("123456789ABCD")
+	entry := widget.NewEntry()
+	// entry.SetText("123456789ABCD")
+	// entry.SetPlaceHolder("aaaaaaaaaaaaaaaaaaaaaaaa")
+	return entry
 }
 func MyUpdateTable(i widget.TableCellID, o fyne.CanvasObject) {
-	o.(*widget.Label).SetText(tracksData[i.Row][i.Col])
+	o.(*widget.Entry).Resize(fyne.NewSize(234, 30))
+	o.(*widget.Entry).SetText(tracksData[i.Row][i.Col])
+}
+
+func AlbumsPanel(create func() fyne.Container) fyne.Container {
+	return create()
 }

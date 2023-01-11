@@ -113,3 +113,7 @@ func GetAudioFileByKey(key string) []byte {
 func GetAllTracks() []db.DbTrack {
 	return db.GetAllTracks()
 }
+func GetAllAlbums() []db.DbAlbumDTO {
+	albums := db.GetAllAlbums()
+	return albumsToDTO(albums)
+}

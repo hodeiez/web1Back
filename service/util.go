@@ -49,3 +49,12 @@ func infosToDTO(infos []db.DbInfo) []db.DbInfoDTO {
 	}
 	return infosDTO
 }
+func albumsToDTO(albums []db.DbAlbum) []db.DbAlbumDTO {
+	albumsDTO := make([]db.DbAlbumDTO, len(albums))
+
+	for i, album := range albums {
+
+		albumsDTO[i] = album.ToDTO(GetTracksByKey(albums[i].Tracks))
+	}
+	return albumsDTO
+}
