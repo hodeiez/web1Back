@@ -1,6 +1,8 @@
 package gui
 
 import (
+	"image/color"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
@@ -42,14 +44,21 @@ func MyTableLength(data [][]string) (int, int) {
 	return len(data), len(data[0])
 }
 func MyCreateTable() fyne.CanvasObject {
-	entry := widget.NewEntry()
+	// entry := widget.NewEntry()
+	// entry.Disable()
+	text := widget.NewEntry()
+	text2 := widget.NewTextGrid()
+	text2.SetRowStyle(0, &widget.CustomTextGridStyle{color.Black, color.Black})
+	text2.ExtendBaseWidget(text)
 	// entry.SetText("123456789ABCD")
 	// entry.SetPlaceHolder("aaaaaaaaaaaaaaaaaaaaaaaa")
-	return entry
+	// return entry
+	return text
 }
 func MyUpdateTable(i widget.TableCellID, o fyne.CanvasObject) {
-	o.(*widget.Entry).Resize(fyne.NewSize(234, 30))
+	// o.(*widget.Entry).TextStyle = fyne.TextStyle{Bold: true}
 	o.(*widget.Entry).SetText(tracksData[i.Row][i.Col])
+	// o.(*widget.Entry).SetText(tracksData[i.Row][i.Col])
 }
 
 func AlbumsPanel(create func() fyne.Container) fyne.Container {

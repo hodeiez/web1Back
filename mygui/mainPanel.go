@@ -47,7 +47,10 @@ func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.C
 	fetchAll := widget.NewButton("Fetch All", func() {})
 
 	tracksTable := widget.NewTable(func() (int, int) { return MyTableLength(tracksData) }, MyCreateTable, MyUpdateTable)
-	return container.New(layout.NewFormLayout(), container.New(layout.NewVBoxLayout(), toSaveTrack, toSaveAlbum, toSaveInfoCard, listTracks, listAlbums, listInfoCards, fetchAll), container.New(layout.NewGridLayout(2), tracksTable, &albumsPanel))
+	for i := 0; i < 5; i++ {
+		tracksTable.SetColumnWidth(i, 100)
+	}
+	return container.New(layout.NewFormLayout(), container.New(layout.NewVBoxLayout(), toSaveTrack, toSaveAlbum, toSaveInfoCard, listTracks, listAlbums, listInfoCards, fetchAll), container.New(layout.NewGridLayout(2), tracksTable, container.NewPadded(&albumsPanel)))
 }
 func setTracksInTable() [][]string {
 	fetched := service.GetAllTracks()
