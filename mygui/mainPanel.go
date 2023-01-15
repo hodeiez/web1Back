@@ -25,11 +25,16 @@ func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.C
 	})
 
 	toSaveAlbum := widget.NewButton("SaveAlbum", func() {
-		tracksWin := a.NewWindow("Albums")
-		tracksWin.SetContent(panels[1](w))
-		tracksWin.Show()
+		albumsWin := a.NewWindow("Albums")
+		albumsWin.SetContent(panels[1](w))
+		albumsWin.Show()
 	})
-	toSaveInfoCard := widget.NewButton("SaveInfoCards", func() {})
+	toSaveInfoCard := widget.NewButton("SaveInfoCards", func() {
+		infosWin := a.NewWindow("Infos")
+		infosWin.SetContent(panels[2](w))
+		infosWin.Show()
+
+	})
 
 	listTracks := widget.NewButton("ListTracks", func() {
 
@@ -40,7 +45,7 @@ func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.C
 	listAlbums := widget.NewButton("ListAlbums", func() {
 
 		albumData = service.GetAllAlbums()
-		albumsPanel = setAlbumsPanel(w)
+		albumsPanel = setGetAlbumsPanel(w)
 
 	})
 	listInfoCards := widget.NewButton("ListInfoCards", func() {})
@@ -62,7 +67,7 @@ func setTracksInTable() [][]string {
 	return returnData
 }
 
-func setAlbumsPanel(w fyne.Window) fyne.Container {
+func setGetAlbumsPanel(w fyne.Window) fyne.Container {
 
 	hBoxes := make([]fyne.Container, len(albumData))
 	vBox := *container.NewVBox()
@@ -73,7 +78,6 @@ func setAlbumsPanel(w fyne.Window) fyne.Container {
 		}, func(i int, c fyne.CanvasObject) {
 			c.(*widget.Button).SetText(a.Tracks[i].Title)
 			c.(*widget.Button).OnTapped = func() {
-				// println(a.Tracks[i].Key)
 				modal := TrackModal(w, a.Tracks[i])
 				modal.Show()
 			}

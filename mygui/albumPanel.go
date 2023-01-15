@@ -23,8 +23,8 @@ func AlbumPanel(w fyne.Window) *fyne.Container {
 	label3 := widget.NewLabel("Date")
 	yearInp := widget.NewEntry()
 	label6 := widget.NewLabel("Date")
-	label4 := widget.NewLabel("Tracks")
-	label5 := widget.NewLabel("")
+	label4 := widget.NewLabel("Track ref")
+	emptyLab := widget.NewLabel("")
 
 	savedTracksList := widget.NewListWithData(trackRefListForAlbum,
 		func() fyne.CanvasObject {
@@ -62,7 +62,7 @@ func AlbumPanel(w fyne.Window) *fyne.Container {
 	})
 
 	addTrack := widget.NewEntry()
-	adtrackRef := widget.NewButton("Add", func() {
+	adtrackRef := widget.NewButton("Add track", func() {
 		trackRefListForAlbum.Append(addTrack.Text)
 	})
 
@@ -71,13 +71,14 @@ func AlbumPanel(w fyne.Window) *fyne.Container {
 			return widget.NewLabel("Response")
 		},
 		func(i binding.DataItem, o fyne.CanvasObject) {
-			// o.(*widget.Label).Bind(i.(binding.String))
 			txt, _ := i.(binding.String).Get()
 			o.(*widget.Label).SetText(txt)
 
 		})
-
-	panel := container.New(layout.NewGridLayout(3), container.New(layout.NewFormLayout(), label1, titleInp, label2, descrInp, label3, dateInp, label6, yearInp, label4, container.NewHBox(addTrack, adtrackRef), label5, but), result, savedTracksList)
+	clearBut := widget.NewButton("clear trackList", func() {
+		trackRefListForAlbum.Set([]string{})
+	})
+	panel := container.NewVBox(container.New(layout.NewGridLayout(3), container.New(layout.NewFormLayout(), label1, titleInp, label2, descrInp, label3, dateInp, label6, yearInp, label4, addTrack, emptyLab, adtrackRef), result, savedTracksList), but, clearBut)
 	panel.Resize(fyne.Size{500, 500})
 	return panel
 }
