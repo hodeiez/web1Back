@@ -1,9 +1,11 @@
 package gui
 
 import (
+	"hodei/web1/db"
 	"image/color"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 )
@@ -63,4 +65,11 @@ func MyUpdateTable(i widget.TableCellID, o fyne.CanvasObject) {
 
 func AlbumsPanel(create func() fyne.Container) fyne.Container {
 	return create()
+}
+func TrackModal(w fyne.Window, track db.DbTrack) dialog.Dialog {
+	return dialog.NewCustom(track.Title, "Ados", container.NewVBox(widget.NewLabel(track.Key),
+		widget.NewLabel(track.Title),
+		widget.NewLabel(track.Description),
+		widget.NewLabel(track.Date),
+		widget.NewLabel(track.FileRef)), w)
 }

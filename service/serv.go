@@ -44,7 +44,16 @@ func AddImageAlbum(imagesRef []string) []string {
 	return imagesRef
 
 }
-func AddAlbum(albumInfo db.DbAlbumDTO) db.DbAlbumDTO {
+func AddAlbum(albumInfo db.DbAlbum) db.DbAlbumDTO {
+	tracks := make([]db.DbTrack, len(albumInfo.Tracks))
+	for i, key := range albumInfo.Tracks {
+		tracks[i], _ = db.GetTrackByKey(key)
+	}
+	albumInfo.Key = db.Put(db.AlbumsBase, albumInfo)
+
+	return albumInfo.ToDTO(tracks)
+}
+func AddAlbumDTO(albumInfo db.DbAlbumDTO) db.DbAlbumDTO {
 
 	for i, track := range albumInfo.Tracks {
 		albumInfo.Tracks[i] = AddTrack(track)
@@ -58,7 +67,7 @@ func AddAlbum(albumInfo db.DbAlbumDTO) db.DbAlbumDTO {
 func AddAlbums(albumsInfos []db.DbAlbumDTO) []db.DbAlbumDTO {
 	if len(albumsInfos) != 0 {
 		for i, a := range albumsInfos {
-			albumsInfos[i] = AddAlbum(a)
+			albumsInfos[i] = AddAlbumDTO(a)
 		}
 	}
 	return albumsInfos
@@ -74,7 +83,7 @@ func GetAlbumDTOByKey(key string) db.DbAlbumDTO {
 	album := db.GetAlbumByKey(key)
 	tracks := make([]db.DbTrack, len(album.Tracks))
 	for i, t := range album.Tracks {
-		tracks[i] = db.GetTrackByKey(t)
+		tracks[i], _ = db.GetTrackByKey(t)
 	}
 	return album.ToDTO(tracks)
 }
@@ -88,7 +97,7 @@ func GetAlbumsDTOByKey(keys []string) []db.DbAlbumDTO {
 func GetTracksByKey(keys []string) []db.DbTrack {
 	tracks := make([]db.DbTrack, len(keys))
 	for i, k := range keys {
-		tracks[i] = db.GetTrackByKey(k)
+		tracks[i], _ = db.GetTrackByKey(k)
 	}
 	return tracks
 }
@@ -108,7 +117,8 @@ func GetAudioFileByRef(ref string) []byte {
 	return drive.GetAudioFile(ref)
 }
 func GetAudioFileByKey(key string) []byte {
-	return drive.GetAudioFile(db.GetTrackByKey(key).FileRef)
+	track, _ := db.GetTrackByKey(key)
+	return drive.GetAudioFile(track.FileRef)
 }
 func GetAllTracks() []db.DbTrack {
 	return db.GetAllTracks()

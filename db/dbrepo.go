@@ -37,14 +37,14 @@ func GetByKey(baseName DbBase, key string, dest interface{}) error {
 	}
 	return err
 }
-func GetTrackByKey(key string) DbTrack {
+func GetTrackByKey(key string) (DbTrack, error) {
 	dest := DbTrack{}
 	err := repo(TracksBase).Get(key, &dest)
 	if err != nil {
-		fmt.Println("failed to insert: ", err)
+		fmt.Println("failed to get: ", err)
 
 	}
-	return dest
+	return dest, err
 }
 func GetAlbumByKey(key string) DbAlbum {
 	dest := DbAlbum{}

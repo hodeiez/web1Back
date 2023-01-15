@@ -14,7 +14,7 @@ import (
 var (
 	tracksData  = [][]string{{"Key", "Name", "Description", "Date", "File"}}
 	albumData   = []db.DbAlbumDTO{}
-	albumsPanel = AlbumsPanel(setAlbumsPanel)
+	albumsPanel = fyne.Container{}
 )
 
 func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.Container)) *fyne.Container {
@@ -40,7 +40,7 @@ func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.C
 	listAlbums := widget.NewButton("ListAlbums", func() {
 
 		albumData = service.GetAllAlbums()
-		albumsPanel = setAlbumsPanel()
+		albumsPanel = setAlbumsPanel(w)
 
 	})
 	listInfoCards := widget.NewButton("ListInfoCards", func() {})
@@ -62,16 +62,21 @@ func setTracksInTable() [][]string {
 	return returnData
 }
 
-func setAlbumsPanel() fyne.Container {
+func setAlbumsPanel(w fyne.Window) fyne.Container {
 
 	hBoxes := make([]fyne.Container, len(albumData))
 	vBox := *container.NewVBox()
 	for i, a := range albumData {
 
 		tracksList := widget.NewList(func() int { return len(a.Tracks) }, func() fyne.CanvasObject {
-			return widget.NewLabel("the size can be this long")
-		}, func(i int, w fyne.CanvasObject) {
-			w.(*widget.Label).SetText(a.Tracks[i].Title)
+			return widget.NewButton("the size can be this long", func() {})
+		}, func(i int, c fyne.CanvasObject) {
+			c.(*widget.Button).SetText(a.Tracks[i].Title)
+			c.(*widget.Button).OnTapped = func() {
+				// println(a.Tracks[i].Key)
+				modal := TrackModal(w, a.Tracks[i])
+				modal.Show()
+			}
 		})
 
 		hBoxes[i] = *container.NewHBox(widget.NewLabel(a.Key), widget.NewLabel(a.Title), widget.NewLabel(a.Description), widget.NewLabel(a.Year), tracksList)

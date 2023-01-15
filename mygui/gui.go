@@ -8,8 +8,9 @@ import (
 func Init() {
 	a := app.New()
 	myWindow := a.NewWindow("TEST")
-	myWindow.SetMaster()
 
+	myWindow.SetMaster()
+	myWindow.Resize(fyne.Size{1200, 200})
 	a.Settings().SetTheme(&MyTheme{})
 	// panels := []*fyne.Container{TrackPanel(myWindow)}
 	panels := []func(w fyne.Window) *fyne.Container{TrackPanel, AlbumPanel}
