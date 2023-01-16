@@ -1,1 +1,1 @@
-/functions go install ./..
+go build .
