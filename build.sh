@@ -1,1 +1,1 @@
-GOBIN=$(pwd)/functions go install ./..
+/functions go install ./..
