@@ -1,1 +1,1 @@
-go build .
+GOBIN=graceful-taffy-8240e4.netlify.app/functions go install ./..
