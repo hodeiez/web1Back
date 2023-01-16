@@ -4,20 +4,19 @@ import (
 	// "hodei/web1/db"
 
 	"hodei/web1/controller"
+	envs "hodei/web1/env"
 	gui "hodei/web1/mygui"
-
-	// "hodei/web1/service"
 	"os"
 )
 
 func main() {
 	//test db
-	if len(os.Args) > 1 && os.Args[1] == "local" {
+	if len(os.Args) > 1 && os.Args[1] == envs.Get("RUN_LOCAL") {
 		println("running local setup")
 		gui.Init()
 	} else {
 		controller.InitApi()
-		println("buuuu")
+		println("running api")
 	}
 	// albumKey := "ngshzau1u2nk"
 	// infoCardKey := "bkf482hx7vmx"

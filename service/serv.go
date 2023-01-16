@@ -6,7 +6,7 @@ import (
 )
 
 //*************ADD**********************//
-func AddInfoCard(info db.DbInfoDTO) string {
+func AddInfoCardDTO(info db.DbInfoDTO) string {
 
 	info.ImageRef = AddImage(info.ImageRef)
 	info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
@@ -14,6 +14,10 @@ func AddInfoCard(info db.DbInfoDTO) string {
 	info.AlbumsRef = AddAlbums(info.AlbumsRef)
 
 	return db.Put(db.InfoCardsBase, DbInfoConverter(info))
+}
+func AddInfoCard(info db.DbInfo) string {
+	info.ImageRef = AddImage(info.ImageRef)
+	return db.Put(db.InfoCardsBase, info)
 }
 func AddTrack(trackInfo db.DbTrack) db.DbTrack {
 	file := drive.Put(db.TracksBase, trackInfo.FileRef)

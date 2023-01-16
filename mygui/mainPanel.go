@@ -55,7 +55,7 @@ func MainPanel(a fyne.App, w fyne.Window, panels [](func(wi fyne.Window) *fyne.C
 	for i := 0; i < 5; i++ {
 		tracksTable.SetColumnWidth(i, 100)
 	}
-	return container.New(layout.NewFormLayout(), container.New(layout.NewVBoxLayout(), toSaveTrack, toSaveAlbum, toSaveInfoCard, listTracks, listAlbums, listInfoCards, fetchAll), container.New(layout.NewGridLayout(2), tracksTable, container.NewPadded(&albumsPanel)))
+	return container.NewVBox(container.New(layout.NewFormLayout(), container.New(layout.NewVBoxLayout(), toSaveTrack, toSaveAlbum, toSaveInfoCard, listTracks, listAlbums, listInfoCards, fetchAll), tracksTable), &albumsPanel)
 }
 func setTracksInTable() [][]string {
 	fetched := service.GetAllTracks()
@@ -74,7 +74,7 @@ func setGetAlbumsPanel(w fyne.Window) fyne.Container {
 	for i, a := range albumData {
 
 		tracksList := widget.NewList(func() int { return len(a.Tracks) }, func() fyne.CanvasObject {
-			return widget.NewButton("the size can be this long", func() {})
+			return widget.NewButton("the size can be this", func() {})
 		}, func(i int, c fyne.CanvasObject) {
 			c.(*widget.Button).SetText(a.Tracks[i].Title)
 			c.(*widget.Button).OnTapped = func() {
@@ -82,8 +82,9 @@ func setGetAlbumsPanel(w fyne.Window) fyne.Container {
 				modal.Show()
 			}
 		})
-
-		hBoxes[i] = *container.NewHBox(widget.NewLabel(a.Key), widget.NewLabel(a.Title), widget.NewLabel(a.Description), widget.NewLabel(a.Year), tracksList)
+		key := widget.NewEntry()
+		key.SetText(a.Key)
+		hBoxes[i] = *container.NewGridWithColumns(5, key, widget.NewLabel(a.Title), widget.NewLabel(a.Description), widget.NewLabel(a.Year), tracksList)
 		vBox.Add(&hBoxes[i])
 	}
 

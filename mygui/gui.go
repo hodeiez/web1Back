@@ -10,7 +10,7 @@ func Init() {
 	myWindow := a.NewWindow("TEST")
 
 	myWindow.SetMaster()
-	myWindow.Resize(fyne.Size{1200, 200})
+	myWindow.Resize(fyne.Size{600, 200})
 	a.Settings().SetTheme(&MyTheme{})
 	// panels := []*fyne.Container{TrackPanel(myWindow)}
 	panels := []func(w fyne.Window) *fyne.Container{TrackPanel, AlbumPanel, InfoPanel}
