@@ -1,1 +1,2 @@
-GOBIN=graceful-taffy-8240e4.netlify.app/functions go install ./..
+set -euxo pipefail
+GOBIN=$(pwd)/functions go install ./..
