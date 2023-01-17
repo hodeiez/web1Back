@@ -1,2 +1,1 @@
-set -euxo pipefail
-GOBIN=$(pwd)/functions go install ./..
+GOBIN=/functions go install ./..
