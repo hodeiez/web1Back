@@ -11,5 +11,6 @@ func InitApi() {
 	router.HandleFunc("/api/infocards/{type}", GetInfoCardsByType).Methods("GET")
 	router.HandleFunc("/api/audio/key/{trackKey}", GetAudioByTrackKey).Methods("GET")
 	router.HandleFunc("/api/audio/ref/{audioRef}", GetAudioByAudioRef).Methods("GET")
+	router.HandleFunc("/api", GetDurum).Methods("GET")
 	http.ListenAndServe(":8000", router)
 }

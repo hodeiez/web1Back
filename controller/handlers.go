@@ -17,6 +17,11 @@ func GetInfoCardsByRange(w http.ResponseWriter, r *http.Request) {
 	infos := service.GetInfoCardDTOByRange(params["from"], params["to"])
 	json.NewEncoder(w).Encode(infos)
 }
+func GetDurum(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	durum := "durum"
+	json.NewEncoder(w).Encode(durum)
+}
 func GetInfoCardsByType(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
