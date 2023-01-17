@@ -5,7 +5,7 @@ import (
 
 	"hodei/web1/controller"
 	envs "hodei/web1/env"
-	gui "hodei/web1/mygui"
+	// gui "hodei/web1/mygui"
 	"os"
 )
 
@@ -13,7 +13,7 @@ func main() {
 	//test db
 	if len(os.Args) > 1 && os.Args[1] == envs.Get("RUN_LOCAL") {
 		println("running local setup")
-		gui.Init()
+		// gui.Init()
 	} else {
 		controller.InitApi()
 		println("running api")
