@@ -33,3 +33,16 @@ func GetAudioByAudioRef(w http.ResponseWriter, r *http.Request) {
 	audio := service.GetAudioFileByRef(params["audioRef"])
 	http.ServeContent(w, r, params["audioRef"], time.Now(), bytes.NewReader(audio))
 }
+
+func enableCors(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
+		h.ServeHTTP(w, r)
+	})
+}
+
+// func enableCors(w *http.ResponseWriter) {
+// 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+// }
