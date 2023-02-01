@@ -53,3 +53,16 @@ func GetAudioFile(fileRef string) []byte {
 	return file
 
 }
+func GetImageFile(fileRef string) []byte {
+	fileBuf, err := repo(db.ImageBase).Get(fileRef)
+	if err != nil {
+		fmt.Println("error getting file: ", err)
+	}
+	defer fileBuf.Close()
+	file, err := ioutil.ReadAll(fileBuf)
+	if err != nil {
+		fmt.Println("error reading file: ", err)
+	}
+	return file
+
+}
