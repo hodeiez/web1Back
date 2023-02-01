@@ -33,7 +33,11 @@ func GetAudioByAudioRef(w http.ResponseWriter, r *http.Request) {
 	audio := service.GetAudioFileByRef(params["audioRef"])
 	http.ServeContent(w, r, params["audioRef"], time.Now(), bytes.NewReader(audio))
 }
-
+func GetImageByImageRef(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	audio := service.GetAudioFileByRef(params["imageRef"])
+	http.ServeContent(w, r, params["imageRef"], time.Now(), bytes.NewReader(audio))
+}
 func enableCors(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -42,7 +46,3 @@ func enableCors(h http.Handler) http.Handler {
 		h.ServeHTTP(w, r)
 	})
 }
-
-// func enableCors(w *http.ResponseWriter) {
-// 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-// }

@@ -131,3 +131,7 @@ func GetAllAlbums() []db.DbAlbumDTO {
 	albums := db.GetAllAlbums()
 	return albumsToDTO(albums)
 }
+
+func GetImageFileByRef(ref string) []byte {
+	return drive.GetImageFile(ref)
+}
