@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func InitApi() {
@@ -12,7 +13,7 @@ func InitApi() {
 	router.HandleFunc("/api/infocards/{type}", GetInfoCardsByType).Methods("GET")
 	router.HandleFunc("/api/audio/key/{trackKey}", GetAudioByTrackKey).Methods("GET")
 	router.HandleFunc("/api/audio/ref/{audioRef}", GetAudioByAudioRef).Methods("GET")
-	router.HandleFunc("/api/audio/ref/{imageRef}", GetImageByImageRef).Methods("GET")
+	router.HandleFunc("/api/image/ref/{imageRef}", GetImageByImageRef).Methods("GET")
 
 	http.ListenAndServe(":8000", router)
 }
