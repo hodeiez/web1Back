@@ -35,6 +35,6 @@ func GetAudioByAudioRef(w http.ResponseWriter, r *http.Request) {
 }
 func GetImageByImageRef(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	audio := service.GetAudioFileByRef(params["imageRef"])
-	http.ServeContent(w, r, params["imageRef"], time.Now(), bytes.NewReader(audio))
+	image := service.GetImageFileByRef(params["imageRef"])
+	http.ServeContent(w, r, params["imageRef"], time.Now(), bytes.NewReader(image))
 }
