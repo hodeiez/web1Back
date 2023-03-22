@@ -134,3 +134,7 @@ func GetAllAlbums() []db.DbAlbumDTO {
 func GetImageFileByRef(ref string) []byte {
 	return drive.GetImageFile(ref)
 }
+func GetInfoCardDTOByLocale(locale string) []db.DbInfoDTO {
+	infos := db.GetInfoCardsByLocale(locale)
+	return infosToDTO(infos)
+}

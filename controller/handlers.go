@@ -38,3 +38,9 @@ func GetImageByImageRef(w http.ResponseWriter, r *http.Request) {
 	image := service.GetImageFileByRef(params["imageRef"])
 	http.ServeContent(w, r, params["imageRef"], time.Now(), bytes.NewReader(image))
 }
+func GetInfoCardsByLocale(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	infos := service.GetInfoCardDTOByLocale(params["locale"])
+	json.NewEncoder(w).Encode(infos)
+}
