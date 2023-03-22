@@ -46,3 +46,10 @@ func enableCors(h http.Handler) http.Handler {
 		h.ServeHTTP(w, r)
 	})
 }
+
+func GetInfoCardsByLocale(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	infos := service.GetInfoCardDTOByLocale(params["locale"])
+	json.NewEncoder(w).Encode(infos)
+}

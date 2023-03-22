@@ -99,3 +99,12 @@ func GetAllAlbums() []DbAlbum {
 	return dest
 
 }
+
+func GetInfoCardsByLocale(locale string) []DbInfo {
+	dest := []DbInfo{}
+	_, err := repo(InfoCardsBase).Fetch(&base.FetchInput{Q: base.Query{{"locale": locale}}, Dest: &dest})
+	if err != nil {
+		fmt.Println("couldn't fetch infocards by type: ", err)
+	}
+	return dest
+}
