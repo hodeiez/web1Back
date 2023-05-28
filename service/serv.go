@@ -138,3 +138,7 @@ func GetInfoCardDTOByLocale(locale string) []db.DbInfoDTO {
 	infos := db.GetInfoCardsByLocale(locale)
 	return infosToDTO(infos)
 }
+func GetInfoCardDTOByLocaleAndYearRange(locale string, from string, to string) []db.DbInfoDTO {
+	infos := db.GetInfoCardsByLocaleAndYearRange(locale, from, to)
+	return infosToDTO(infos)
+}

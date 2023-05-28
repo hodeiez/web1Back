@@ -107,3 +107,12 @@ func GetInfoCardsByLocale(locale string) []DbInfo {
 	}
 	return dest
 }
+func GetInfoCardsByLocaleAndYearRange(locale string, from string, to string) []DbInfo {
+	dest := []DbInfo{}
+	_, err := repo(InfoCardsBase).Fetch(&base.FetchInput{Q: base.Query{{"date?r": []string{from, to}, "locale": locale}}, Dest: &dest})
+	if err != nil {
+		fmt.Println("couldn't fetch infocards by range and Locale:", err)
+	}
+	return dest
+
+}

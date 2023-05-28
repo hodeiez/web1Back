@@ -44,3 +44,9 @@ func GetInfoCardsByLocale(w http.ResponseWriter, r *http.Request) {
 	infos := service.GetInfoCardDTOByLocale(params["locale"])
 	json.NewEncoder(w).Encode(infos)
 }
+func GetInfoCardsByLocaleAndYearRange(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	infos := service.GetInfoCardDTOByLocaleAndYearRange(params["locale"], params["from"], params["to"])
+	json.NewEncoder(w).Encode(infos)
+}
