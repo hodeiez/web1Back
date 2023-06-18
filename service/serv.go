@@ -6,16 +6,19 @@ import (
 )
 
 //*************ADD**********************//
-func AddInfoCardDTO(info db.DbInfoDTO) string {
+// func AddInfoCardDTO(info db.DbInfoDTO) string {
 
-	info.ImageRef = AddImage(info.ImageRef)
-	info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
-	info.TracksRef = AddTracks(info.TracksRef)
-	info.AlbumsRef = AddAlbums(info.AlbumsRef)
+// 	info.ImageRef = AddImage(info.ImageRef)
+// 	info.ImageAlbum = AddImageAlbum(info.ImageAlbum)
+// 	info.TracksRef = AddTracks(info.TracksRef)
+// 	info.AlbumsRef = AddAlbums(info.AlbumsRef)
+// 	/*-----------*/
 
-	return db.Put(db.InfoCardsBase, DbInfoConverter(info))
-}
+// 	return db.Put(db.InfoCardsBase, DbInfoConverter(info))
+// }
 func AddInfoCard(info db.DbInfo) string {
+	info.TitleRef = AddTexts(ConvertTextsToDbText(info.TitleRef))
+	info.DescriptionRef = AddTexts(ConvertTextsToDbText(info.DescriptionRef))
 	info.ImageRef = AddImage(info.ImageRef)
 	return db.Put(db.InfoCardsBase, info)
 }
@@ -77,6 +80,14 @@ func AddAlbums(albumsInfos []db.DbAlbumDTO) []db.DbAlbumDTO {
 	return albumsInfos
 }
 
+func AddTexts(texts []db.DbText) []string {
+	refs := make([]string, len(texts))
+	for i, dbText := range texts {
+		refs[i] = db.Put(db.Texts, dbText)
+	}
+	return refs
+}
+
 //**************************************UPDATES****************//
 func UpdateTrack(trackInfo db.DbTrack) {
 	db.Update(db.TracksBase, trackInfo.Key, trackInfo)
@@ -107,7 +118,7 @@ func GetTracksByKey(keys []string) []db.DbTrack {
 }
 func GetInfoCardDTOByKey(key string) db.DbInfoDTO {
 	info := db.GetInfoCardByKey(key)
-	return info.ToDTO(GetTracksByKey(info.TracksRef), GetAlbumsDTOByKey(info.AlbumsRef))
+	return info.ToDTO(GetTextsByKeys(info.TitleRef), GetTextsByKeys(info.DescriptionRef), GetTracksByKey(info.TracksRef), GetAlbumsDTOByKey(info.AlbumsRef))
 }
 func GetInfoCardDTOByType(info db.InfoType) []db.DbInfoDTO {
 	infos := db.GetInfoCardsByType(info)
@@ -141,4 +152,12 @@ func GetInfoCardDTOByLocale(locale string) []db.DbInfoDTO {
 func GetInfoCardDTOByLocaleAndYearRange(locale string, from string, to string) []db.DbInfoDTO {
 	infos := db.GetInfoCardsByLocaleAndYearRange(locale, from, to)
 	return infosToDTO(infos)
+}
+func GetTextsByKeys(keys []string) []db.DbText {
+	texts := make([]db.DbText, len(keys))
+	for i, key := range keys {
+		textDb, _ := db.GetTextByKey(key)
+		texts[i] = textDb
+	}
+	return texts
 }

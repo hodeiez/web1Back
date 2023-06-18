@@ -52,7 +52,7 @@ func InfoPanel(w fyne.Window) *fyne.Container {
 		addItemToLabel(imageAlbumEntry.Text, selImageAlbum)
 	})
 	saveInfoCard := widget.NewButton("Save Info Card", func() {
-		service.AddInfoCard(db.DbInfo{Year: yearEntry.Text, Locale: localeEntry.Text, Title: titleEntry.Text, Description: descrEntry.Text, ImageRef: selImageForInfo.Text, AlbumsRef: toSlice(selAlbums.Text), TracksRef: toSlice(selTracks.Text), Date: dateEntry.Text, ImageAlbum: toSlice(selImageAlbum.Text), InfoType: selInfoType.Text})
+		service.AddInfoCard(db.DbInfo{Year: yearEntry.Text, TitleRef: service.TextToArray(titleEntry.Text), DescriptionRef: service.TextToArray(descrEntry.Text), ImageRef: selImageForInfo.Text, AlbumsRef: toSlice(selAlbums.Text), TracksRef: toSlice(selTracks.Text), Date: dateEntry.Text, ImageAlbum: toSlice(selImageAlbum.Text), InfoType: selInfoType.Text})
 	})
 	selected := container.NewVBox(widget.NewLabel(""), widget.NewLabel(""), widget.NewLabel(""), widget.NewLabel(""), selInfoType, widget.NewLabel(""), selImageForInfo, selAlbums, selTracks, selImageAlbum)
 	return container.NewBorder(nil, saveInfoCard, container.New(layout.NewGridLayoutWithColumns(3), titleLab, titleEntry, empty,

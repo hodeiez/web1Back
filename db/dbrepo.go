@@ -116,3 +116,12 @@ func GetInfoCardsByLocaleAndYearRange(locale string, from string, to string) []D
 	return dest
 
 }
+func GetTextByKey(key string) (DbText, error) {
+	dest := DbText{}
+	err := repo(Texts).Get(key, &dest)
+	if err != nil {
+		fmt.Println("failed to get: ", err)
+
+	}
+	return dest, err
+}

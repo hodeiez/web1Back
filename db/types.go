@@ -24,11 +24,11 @@ type DbTrack struct {
 	FileRef     string `json:"fileRef"`
 }
 type DbInfoDTO struct {
-	Key         string       `json:"key"`
-	Year        string       `json:"year"`
-	Locale      string       `json:"locale"`
-	Title       string       `json:"title"`
-	Description string       `json:"description"`
+	Key  string `json:"key"`
+	Year string `json:"year"`
+	// Locale      string       `json:"locale"`
+	Title       []DbText     `json:"title"`
+	Description []DbText     `json:"description"`
 	ImageRef    string       `json:"imageRef"`
 	AlbumsRef   []DbAlbumDTO `json:"albumsRef"`
 	TracksRef   []DbTrack    `json:"tracksRef"`
@@ -37,17 +37,17 @@ type DbInfoDTO struct {
 	InfoType    string       `json:"type"`
 }
 type DbInfo struct {
-	Key         string   `json:"key"`
-	Year        string   `json:"year"`
-	Locale      string   `json:"locale"`
-	Title       string   `json:"title"`
-	Description string   `json:"description"`
-	ImageRef    string   `json:"imageRef"`
-	AlbumsRef   []string `json:"albumsRef"`
-	TracksRef   []string `json:"tracksRef"`
-	Date        string   `json:"date"`
-	ImageAlbum  []string `json:"images"`
-	InfoType    string   `json:"type"`
+	Key  string `json:"key"`
+	Year string `json:"year"`
+	// Locale         string   `json:"locale"`
+	TitleRef       []string `json:"title"`
+	DescriptionRef []string `json:"description"`
+	ImageRef       string   `json:"imageRef"`
+	AlbumsRef      []string `json:"albumsRef"`
+	TracksRef      []string `json:"tracksRef"`
+	Date           string   `json:"date"`
+	ImageAlbum     []string `json:"images"`
+	InfoType       string   `json:"type"`
 }
 type InfoType int
 
@@ -90,6 +90,7 @@ const (
 	AlbumsBase
 	InfoCardsBase
 	ImageBase
+	Texts
 )
 
 func (dbBase DbBase) String() string {
@@ -102,6 +103,8 @@ func (dbBase DbBase) String() string {
 		return "InfoCards"
 	case ImageBase:
 		return "Images"
+	case Texts:
+		return "Texts"
 	default:
 		return "-"
 	}
@@ -110,6 +113,12 @@ func (album DbAlbum) ToDTO(tracks []DbTrack) DbAlbumDTO {
 	return DbAlbumDTO{Key: album.Key, Tracks: tracks, Year: album.Year, Date: album.Year, Title: album.Title, Description: album.Description}
 
 }
-func (info DbInfo) ToDTO(tracks []DbTrack, albums []DbAlbumDTO) DbInfoDTO {
-	return DbInfoDTO{Key: info.Key, Year: info.Year, Locale: info.Locale, Title: info.Title, Description: info.Description, ImageRef: info.ImageRef, AlbumsRef: albums, TracksRef: tracks, Date: info.Date, ImageAlbum: info.ImageAlbum, InfoType: info.InfoType}
+func (info DbInfo) ToDTO(title []DbText, description []DbText, tracks []DbTrack, albums []DbAlbumDTO) DbInfoDTO {
+	return DbInfoDTO{Key: info.Key, Year: info.Year, Title: title, Description: description, ImageRef: info.ImageRef, AlbumsRef: albums, TracksRef: tracks, Date: info.Date, ImageAlbum: info.ImageAlbum, InfoType: info.InfoType}
+}
+
+type DbText struct {
+	Key    string `json:"key"`
+	Locale string `json:"locale"`
+	Text   string `json:"text"`
 }
